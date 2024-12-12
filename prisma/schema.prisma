@@ -49,3 +49,12 @@ model Like {
 
   @@unique([tweetId, userId]) // 복합 고유 제약 조건 추가
 }
+
+model Product {
+  id        Int        @id @default(autoincrement())
+  url       String
+  name      String
+  price     Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime @updatedAt
+}

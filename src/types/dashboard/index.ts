@@ -18,3 +18,18 @@ export interface ProfileClientProps {
     createdAt: Date;
   };
 }
+
+export type Tweet = {
+  id: number;
+  content: string;
+  createdAt: Date;
+  user: { id: number; username: string };
+  likes: { id: number; userId: number; tweetId: number }[];
+  responses: { id: number; content: string; createdAt: Date; userId: number; updatedAt: Date; tweetId: number }[];
+};
+
+export interface PageProps {
+  params: {
+    id: string;
+  };
+}

@@ -3,8 +3,7 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { sessionOptions } from "@/lib/auth/session";
 import { SessionData } from "@/types/auth";
-import { signOutAction } from "@/lib/actions/signOut";
-import { Home, Search, PenSquare, MessageCircle, User, LogIn } from "lucide-react";
+import { Home, Search, PenSquare, User, LogIn, MessageCircle } from "lucide-react";
 
 export default async function BottomNav() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
@@ -22,9 +21,14 @@ export default async function BottomNav() {
           <span className="text-xs font-medium">검색</span>
         </Link>
 
-        <Link href="/write" className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors">
+        <Link href="/tweets" className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors">
+          <MessageCircle className="w-6 h-6" />
+          <span className="text-xs font-medium">트윗</span>
+        </Link>
+
+        <Link href="/products/new" className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors">
           <PenSquare className="w-6 h-6" />
-          <span className="text-xs font-medium">글쓰기</span>
+          <span className="text-xs font-medium">상품등록</span>
         </Link>
 
         {session.user ? (
