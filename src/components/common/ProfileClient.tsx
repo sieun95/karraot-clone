@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarDays, Mail, User, LogOut, MapPin, Heart, ShoppingBag } from "lucide-react";
+import { CalendarDays, Mail, User, LogOut, MapPin, Heart, ShoppingBag, Pencil } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,12 +18,27 @@ import {
 import { signOutAction } from "@/lib/actions/signOut";
 import { toast } from "sonner";
 import { ProfileClientProps } from "@/types/dashboard";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ProfileClient({ user }: ProfileClientProps) {
+  const router = useRouter();
+
   const handleSignOut = async () => {
     await signOutAction();
     toast.success("로그아웃 되었습니다");
   };
+
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
+
+  useEffect(() => {
+    const checkCurrentUser = async () => {
+      const res = await fetch("/api/auth/session");
+      const data = await res.json();
+      setIsCurrentUser(data.user?.id === user.id);
+    };
+    checkCurrentUser();
+  }, [user.id]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
@@ -56,27 +71,35 @@ export default function ProfileClient({ user }: ProfileClientProps) {
               </div>
             </CardContent>
 
-            <CardFooter>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" className="w-full bg-red-500/80 hover:bg-red-600/80">
-                    <LogOut className="w-4 h-4 mr-2" />
-                    로그아웃
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="bg-gray-800 border-gray-700">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="text-gray-200">로그아웃</AlertDialogTitle>
-                    <AlertDialogDescription className="text-gray-400">정말 로그아웃 하시겠습니까?</AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel className="bg-gray-700 text-gray-200 hover:bg-gray-600">취소</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleSignOut} className="bg-red-500/80 hover:bg-red-600/80">
+            <CardFooter className="flex gap-2">
+              {isCurrentUser && (
+                <Button variant="outline" className="flex-1 border-orange-400 text-orange-400 hover:bg-orange-400/10" onClick={() => router.push("/users/edit")}>
+                  <Pencil className="w-4 h-4 mr-2" />
+                  수정하기
+                </Button>
+              )}
+              {isCurrentUser && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="flex-1 bg-red-500/80 hover:bg-red-600/80">
+                      <LogOut className="w-4 h-4 mr-2" />
                       로그아웃
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="bg-gray-800 border-gray-700">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="text-gray-200">로그아웃</AlertDialogTitle>
+                      <AlertDialogDescription className="text-gray-400">정말 로그아웃 하시겠습니까?</AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="bg-gray-700 text-gray-200 hover:bg-gray-600">취소</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleSignOut} className="bg-red-500/80 hover:bg-red-600/80">
+                        로그아웃
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
             </CardFooter>
           </Card>
 
@@ -88,21 +111,27 @@ export default function ProfileClient({ user }: ProfileClientProps) {
                 <div className="flex flex-col items-center space-y-2">
                   <ShoppingBag className="w-8 h-8 text-orange-400" />
                   <h3 className="font-semibold text-gray-300">판매 상품</h3>
-                  <p className="text-2xl font-bold text-orange-400">12</p>
+                  <p className="text-2xl font-bold text-orange-400">
+                    {user.products?.length || 0}
+                  </p>
                 </div>
               </Card>
               <Card className="p-4 bg-gray-800/70 backdrop-blur-sm shadow-xl border-gray-700 hover:shadow-2xl transition-shadow">
                 <div className="flex flex-col items-center space-y-2">
                   <Heart className="w-8 h-8 text-orange-400" />
-                  <h3 className="font-semibold text-gray-300">관심 상품</h3>
-                  <p className="text-2xl font-bold text-orange-400">24</p>
+                  <h3 className="font-semibold text-gray-300">좋아요</h3>
+                  <p className="text-2xl font-bold text-orange-400">
+                    {user.likes?.length || 0}
+                  </p>
                 </div>
               </Card>
               <Card className="p-4 bg-gray-800/70 backdrop-blur-sm shadow-xl border-gray-700 hover:shadow-2xl transition-shadow">
                 <div className="flex flex-col items-center space-y-2">
                   <User className="w-8 h-8 text-orange-400" />
-                  <h3 className="font-semibold text-gray-300">팔로워</h3>
-                  <p className="text-2xl font-bold text-orange-400">156</p>
+                  <h3 className="font-semibold text-gray-300">팔윗</h3>
+                  <p className="text-2xl font-bold text-orange-400">
+                    {user.tweets?.length || 0}
+                  </p>
                 </div>
               </Card>
             </div>

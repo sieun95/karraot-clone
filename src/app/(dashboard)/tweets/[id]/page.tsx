@@ -33,7 +33,7 @@ export default async function TweetDetail({ params }: PageProps) {
               <AvatarFallback className="bg-gray-700 text-orange-400">{tweet.user.username[0]}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <Link href={`/profile/${tweet.user.id}`} className="font-semibold text-gray-200 hover:text-orange-400 transition-colors">
+              <Link href={`/users/${tweet.user.username}`} className="font-semibold text-gray-200 hover:text-orange-400 transition-colors">
                 {tweet.user.username}
               </Link>
               <span className="text-sm text-gray-400">

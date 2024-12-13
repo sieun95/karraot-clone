@@ -17,6 +17,7 @@ model User {
   tweets    Tweet[]    @relation("UserTweets")
   responses Response[] @relation("UserResponses")
   likes     Like[]     @relation("UserLikes")
+  products  Product[]  @relation("ProductSeller")
 }
 
 model Tweet {
@@ -57,4 +58,6 @@ model Product {
   price     Int
   createdAt DateTime   @default(now())
   updatedAt DateTime @updatedAt
+  seller    User      @relation("ProductSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId  Int
 }

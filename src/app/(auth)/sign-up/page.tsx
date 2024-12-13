@@ -16,7 +16,7 @@ export default function SignUp() {
   });
 
   if (state.success) {
-    redirect("/profile");
+    redirect("/");
   }
 
   return (

@@ -7,14 +7,11 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 
-// 딜레이를 위한 유틸리티 함수
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
 export default async function Tweets() {
-  // 5초 딜레이 추가
-  await delay(5000);
+  // 딜레이를 위한 유틸리티 함수
+  // const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  // await delay(5000);
   const tweets = await getTweets();
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 p-4">
@@ -38,9 +35,7 @@ export default async function Tweets() {
                   <AvatarFallback className="bg-gray-700 text-orange-400">{tweet.user.username[0]}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <Link href={`/users/${tweet.user.username}`} className="font-semibold text-gray-200 hover:text-orange-400 transition-colors">
-                    {tweet.user.username}
-                  </Link>
+                  <p className="font-semibold text-gray-200">{tweet.user.username}</p>
                   <span className="text-sm text-gray-400">
                     {formatDistanceToNow(new Date(tweet.createdAt), {
                       addSuffix: true,

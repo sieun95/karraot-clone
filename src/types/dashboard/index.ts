@@ -13,9 +13,13 @@ export interface TweetState {
 
 export interface ProfileClientProps {
   user: {
+    id: number;
     username: string;
     email: string;
     createdAt: Date;
+    products?: any[];
+    likes?: any[];
+    tweets?: any[];
   };
 }
 
@@ -32,4 +36,8 @@ export interface PageProps {
   params: {
     id: string;
   };
+}
+
+export interface SearchPageProps {
+  searchParams: { q?: string };
 }

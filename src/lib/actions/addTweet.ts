@@ -6,6 +6,7 @@ import { sessionOptions } from "@/lib/auth/session";
 import { SessionData } from "@/types/auth";
 import { cookies } from "next/headers";
 import { TweetState } from "@/types/dashboard";
+import { redirect } from "next/navigation";
 
 export async function addTweetAction(prevState: TweetState, formData: FormData) {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);

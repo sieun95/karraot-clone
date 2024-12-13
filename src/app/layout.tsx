@@ -2,16 +2,12 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import BottomNav from "@/components/common/BottomNav";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="ko" suppressHydrationWarning>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <main className="pb-[72px]">{children}</main>
+          {children}
           <BottomNav />
         </ThemeProvider>
       </body>

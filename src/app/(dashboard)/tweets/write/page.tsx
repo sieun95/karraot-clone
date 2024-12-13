@@ -7,19 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
 
 export default function AddTweet() {
   const [state, formAction] = useFormState(addTweetAction, {
     errors: { content: [] },
     success: undefined,
   });
-
-  useEffect(() => {
-    if (state.success) {
-      redirect("/tweets");
-    }
-  }, [state.success]);
+  console.log("state : ", state);
+  if (state.success) {
+    redirect("/tweets");
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col items-center justify-center px-4">
@@ -48,10 +45,7 @@ export default function AddTweet() {
                 </p>
               ))}
             </div>
-            <Button 
-              type="submit"
-              className="w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white"
-            >
+            <Button type="submit" className="w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white">
               트윗 추가
             </Button>
           </form>

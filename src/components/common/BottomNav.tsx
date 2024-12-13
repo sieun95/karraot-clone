@@ -26,13 +26,16 @@ export default async function BottomNav() {
           <span className="text-xs font-medium">트윗</span>
         </Link>
 
-        <Link href="/products/new" className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors">
+        <Link href="/products" className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors">
           <PenSquare className="w-6 h-6" />
-          <span className="text-xs font-medium">상품등록</span>
+          <span className="text-xs font-medium">상품목록</span>
         </Link>
 
         {session.user ? (
-          <Link href="/profile" className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors">
+          <Link
+            href={`/users/${session.user.username}`}
+            className="flex flex-col items-center gap-1 p-2 text-gray-600 hover:text-orange-500 dark:text-gray-400 dark:hover:text-orange-500 transition-colors"
+          >
             <User className="w-6 h-6" />
             <span className="text-xs font-medium">프로필</span>
           </Link>
