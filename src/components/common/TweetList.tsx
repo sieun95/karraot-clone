@@ -15,10 +15,9 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Tweet } from "@/types/dashboard";
-import { useFormState } from "react-dom";
 
-export default async function TweetList({ tweetList }: { tweetList: Tweet[] }) {
-  const [tweets, setTweets] = useState<Tweet[]>(tweetList);
+export default function TweetList() {
+  const [tweets, setTweets] = useState<Tweet[]>([]);
   const [content, setContent] = useState("");
   const [selectedTweetId, setSelectedTweetId] = useState<number | null>(null);
   const { toast } = useToast();
@@ -39,7 +38,7 @@ export default async function TweetList({ tweetList }: { tweetList: Tweet[] }) {
     };
 
     fetchTweets();
-  }, []);
+  }, [toast]);
 
   const handleLike = async (tweetId: number) => {
     try {

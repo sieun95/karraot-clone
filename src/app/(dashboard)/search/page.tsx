@@ -26,7 +26,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
         {query && (
           <h2 className="text-gray-200 mb-4">
-            "{query}" 검색 결과 ({tweets.length}개)
+            &ldquo;{query}&rdquo; 검색 결과 ({tweets.length}개)
           </h2>
         )}
 
